@@ -1,0 +1,68 @@
+
+We need four files:
+A.  The HTML shell which hosts the svg.
+    SVG is Scalar Vector Graphics.
+
+B.  The JasonFile.States that has the  the outline of the states.
+    i.    This can be downloaded to your local system, OR
+    ii.   This can be pulled in off of the internet.
+
+C.  You JavaScript file, which could be either:
+    i.    Separate or 
+    ii.   in the HTML file (A).
+
+D.  The  DATA file
+
+
+Basic Map, but empty.
+1.  Two ways to use d3:
+    A.  Download D3 and use it.
+         d3.zip download, or 
+         Download the d3.js file into a system from d3js.org 
+
+    B.  Reference the D3 script over the internet.	<-- RECOMMENDED.
+        This is nice because D3 keeps changing things, constantly v3, v5, v6...
+
+2.  Then in script tag of HTML:
+    A.  Give width and height of map you want.
+
+    B.  d3.geoAlbertsUsa().translate( [ w/2, h/2 ])... 
+        This gives a geoJason file, that shows a pre-projected version of the Earth.
+
+    C.  Javascript uses "promise" objects.
+        Then give a path = geoPath()
+                           .projection( projection )...
+        Converts the geoJason coordinates into svg path codes.
+
+    D.  Then the actual SVG path codes.
+        This is the "body" tag.   The ENTIRE BODY of the HTML file.
+
+    E.  .append("svg") creates the canvas... 
+
+    F.  The geoJason shows the pathcode for geoPath.... 
+
+    G.  d3.json("us-states.json).then( function(json){
+            svg.selectAll("path")
+                            .data(json.features)  <-- data for the JSON file.
+                            .enter() 
+                            .append( "path" )
+                            .attr("d", path)
+                            .style("stroke", "black")
+
+
+
+
+----------------
+
+Launching Everything... 
+
+1.  In a separate window, but in the same directory, start the server... 
+           python -m http.server 8888 & 
+    LAUNCH THE SERVER IN THE CORRECT DIRECTORY.
+
+2.  In your browser, load localhost:8888
+    This loads the directory.
+
+    OR In your browser, load localhost:8888/file.html
+    OR In your browser, load localhost:8888/choropleth_example.html
+
