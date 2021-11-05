@@ -16,8 +16,9 @@ def read_covid_cases():
         
         with open(file_path, newline='') as csvfile:
             # parse state from filename
-            stateSearch = re.search(".*ST__([^_]*)_", csvfile.name)
+            stateSearch = re.search(".*ST__(.*)_530", csvfile.name)
             state = stateSearch.group(1)
+            state = state.replace("_", " ")
 
 
             spamreader = csv.reader(csvfile, delimiter=',')
