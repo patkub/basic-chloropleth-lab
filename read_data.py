@@ -20,22 +20,33 @@ def read_covid_cases():
             state = stateSearch.group(1)
             state = state.replace("_", " ")
 
-
             spamreader = csv.reader(csvfile, delimiter=',')
             # Skips the first row which is the header
             # YYYYMMDD,NewCases,MovingAvgOfCases,NewDeaths,AvgNewDeaths
             next(spamreader)
-            first_row = next(spamreader)
-            case_avg = first_row[1]
 
-            # store average cases per state
-            states[state] = case_avg
+            sum_cases = 0
+            sum_deaths = 0
+            for row in spamreader:
+                sum_cases += int(row[1]) # NewCases
+                sum_deaths += int(row[3]) # NewDeaths
+            
+            # ratio of deaths to cases
+            ratio = sum_deaths / sum_cases
+            states[state] = ratio
+    
+
+    # normalize data
+    min_val = min(states.values())
+    max_val = max(states.values())
+
+    for state in states:
+        states[state] = max(((states[state] - min_val) / (max_val - min_val)) * 10, 0.01)
     
     return states
 
 # read in covid cases from csv files
 states = read_covid_cases()
-#print(states)
 
 # write csv data
 with open('my-data-vals.csv', 'w') as csvfile:
