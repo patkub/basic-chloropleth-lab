@@ -26,7 +26,7 @@ def read_covid_cases():
             # YYYYMMDD,NewCases,MovingAvgOfCases,NewDeaths,AvgNewDeaths
             next(spamreader)
             first_row = next(spamreader)
-            case_avg = first_row[2]
+            case_avg = first_row[1]
 
             # store average cases per state
             states[state] = case_avg
